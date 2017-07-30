@@ -16,17 +16,17 @@ import com.epam.lab.gmail.models.User;
 
 @XmlRootElement(name = "users")
 @XmlAccessorType(XmlAccessType.FIELD)
-public class UsersDataHolder {
+public class UserManager {
 	public static final String USES_FILE_URL = "data/users.xml";
-	private static UsersDataHolder instance;
+	private static UserManager instance;
 
 	public static synchronized User getUser() {
 		if (Objects.isNull(instance)) {
 			JAXBContext jaxbContext;
 			try {
-				jaxbContext = JAXBContext.newInstance(UsersDataHolder.class);
+				jaxbContext = JAXBContext.newInstance(UserManager.class);
 				Unmarshaller jaxbUnmarshaller = jaxbContext.createUnmarshaller();
-				instance = (UsersDataHolder) jaxbUnmarshaller.unmarshal(new File(USES_FILE_URL));
+				instance = (UserManager) jaxbUnmarshaller.unmarshal(new File(USES_FILE_URL));
 			} catch (JAXBException e) {
 				e.printStackTrace();
 			}

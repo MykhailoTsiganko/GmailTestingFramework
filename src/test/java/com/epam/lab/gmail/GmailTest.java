@@ -10,12 +10,12 @@ import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
 
-import com.epam.lab.gmail.bisnes_layour.GmailBO;
-import com.epam.lab.gmail.bisnes_layour.LoginBO;
+import com.epam.lab.gmail.bisnes_objects.GmailBO;
+import com.epam.lab.gmail.bisnes_objects.LoginBO;
 import com.epam.lab.gmail.drivers.DriverManager;
 import com.epam.lab.gmail.models.Message;
 import com.epam.lab.gmail.models.User;
-import com.epam.lab.gmail.prop.PropertiesLoader;
+import com.epam.lab.gmail.prop.DriverPropertisLoader;
 import com.epam.lab.gmail.providers.CustomDataProvider;
 
 public class GmailTest {
@@ -27,7 +27,7 @@ public class GmailTest {
     @BeforeClass
     public void setUp() throws Exception {
 	logger.info("setUp");
-	PropertiesLoader.load(PROPERTIES_FILE_URL);
+	DriverPropertisLoader.load(PROPERTIES_FILE_URL);
     }
 
     @Test(dataProviderClass = CustomDataProvider.class, dataProvider = "getUsers")

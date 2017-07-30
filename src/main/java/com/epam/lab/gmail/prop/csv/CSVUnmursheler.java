@@ -7,58 +7,69 @@ import java.io.Reader;
 import java.lang.reflect.Field;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
-import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.List;
 
 import org.apache.commons.csv.CSVFormat;
 import org.apache.commons.csv.CSVRecord;
+import org.apache.log4j.Logger;
 
-import com.epam.lab.gmail.models.Order;
 import com.epam.lab.gmail.prop.csv.anno.CSVElement;
 import com.epam.lab.gmail.prop.csv.anno.CSVRootElement;
 import com.epam.lab.gmail.prop.csv.exeptions.copy.CSVUnmurshalException;
 
 public class CSVUnmursheler {
+    private static Logger logger = Logger.getLogger(CSVUnmursheler.class);
 
-    public static <T> List<T> unmurshalToList(File file, Class<T> clazz)
-	    throws CSVUnmurshalException, IOException, InstantiationException, IllegalAccessException,
-	    IllegalArgumentException, InvocationTargetException, NoSuchMethodException, SecurityException {
+    public static <T> List<T> getObjects(File file, Class<T> clazz) throws CSVUnmurshalException {
+	logger.info("getObjects");
 	if (!clazz.isAnnotationPresent(CSVRootElement.class)) {
 	    throw new CSVUnmurshalException();
 	}
 	List<T> list = new ArrayList<>();
-	Reader in = new FileReader(file);
-	Iterable<CSVRecord> parser = CSVFormat.EXCEL.withFirstRecordAsHeader().withRecordSeparator(",")
-		.parse(in);
-	for (CSVRecord record : parser) {
-	    list.add(parseElement(clazz, record));
-	}
-	return list;
-    }
-    
-    public static <T> List<T> unmurshal(File file, Class<T> clazz,CSVFormat format)
-	    throws CSVUnmurshalException, IOException, InstantiationException, IllegalAccessException,
-	    IllegalArgumentException, InvocationTargetException, NoSuchMethodException, SecurityException {
-	if (!clazz.isAnnotationPresent(CSVRootElement.class)) {
-	    throw new CSVUnmurshalException();
-	}
-	List<T> list = new ArrayList<>();
-	Reader in = new FileReader(file);
-	Iterable<CSVRecord> parser = format.parse(in);
-	for (CSVRecord record : parser) {
-	    list.add(parseElement(clazz, record));
+	try {
+	    Reader in = new FileReader(file);
+	    Iterable<CSVRecord> parser = CSVFormat.EXCEL.withFirstRecordAsHeader().withRecordSeparator(",")
+		    .parse(in);
+	    for (CSVRecord record : parser) {
+		list.add(getElement(clazz, record));
+	    }
+	} catch (Exception e) {
+	    e.printStackTrace();
+	    logger.warn(e.getMessage());
 	}
 	return list;
     }
 
-    private static <T> T parseElement(Class<T> clazz, CSVRecord record)
+    public static <T> List<T> getObjects(File file, Class<T> clazz, CSVFormat format)
+	    throws CSVUnmurshalException, IOException, InstantiationException, IllegalAccessException,
+	    IllegalArgumentException, InvocationTargetException, NoSuchMethodException, SecurityException {
+	logger.info("getObjects method");
+	if (!clazz.isAnnotationPresent(CSVRootElement.class)) {
+	    throw new CSVUnmurshalException();
+	}
+	List<T> list = new ArrayList<>();
+	try {
+	    Reader in = new FileReader(file);
+	    Iterable<CSVRecord> parser = format.parse(in);
+	    for (CSVRecord record : parser) {
+		list.add(getElement(clazz, record));
+	    }
+	} catch (Exception e) {
+	    e.printStackTrace();
+	    logger.warn(e.getMessage());
+	}
+	return list;
+    }
+
+    private static <T> T getElement(Class<T> clazz, CSVRecord record)
 	    throws InstantiationException, IllegalAccessException, IllegalArgumentException,
 	    InvocationTargetException, NoSuchMethodException, SecurityException {
+	logger.info("getElement");
 	T instance = clazz.newInstance();
 	Method[] methods = clazz.getMethods();
 	Field[] fields = clazz.getDeclaredFields();
-	
+
 	for (Method method : methods) {
 	    if (method.isAnnotationPresent(CSVElement.class)) {
 		String annoValue = method.getAnnotation(CSVElement.class).name();
@@ -74,13 +85,14 @@ public class CSVUnmursheler {
 		setField(field, instance, value);
 	    }
 	}
-	
+
 	return instance;
     }
 
     private static <T> void invokeMethod(Method method, T instance, String value)
 	    throws NumberFormatException, IllegalAccessException, IllegalArgumentException,
 	    InvocationTargetException, InstantiationException, NoSuchMethodException, SecurityException {
+	logger.info("invokeMethod");
 	Class<?> clazz = method.getParameterTypes()[0];
 	if (clazz.isPrimitive()) {
 	    if (clazz.equals(byte.class)) {
@@ -106,6 +118,7 @@ public class CSVUnmursheler {
     private static <T> void setField(Field field, T instance, String value)
 	    throws NumberFormatException, IllegalAccessException, IllegalArgumentException,
 	    InvocationTargetException, InstantiationException, NoSuchMethodException, SecurityException {
+	logger.info("setField");
 	Class<?> clazz = field.getType();
 	if (clazz.isPrimitive()) {
 	    if (clazz.equals(byte.class)) {
@@ -127,13 +140,4 @@ public class CSVUnmursheler {
 	    field.set(instance, clazz.getConstructor(String.class).newInstance(value));
 	}
     }
-
-    public static void main(String[] args) throws InstantiationException, IllegalAccessException,
-	    IllegalArgumentException, InvocationTargetException, NoSuchMethodException, SecurityException,
-	    CSVUnmurshalException, IOException, ParseException {
-	File file = new File("data/test2.csv");
-	List<Order> list = unmurshal(file, Order.class,CSVFormat.DEFAULT.withHeader("id","power","isHevy","name").withRecordSeparator(","));
-	list.forEach(System.out::println);
-    }
-
 }
