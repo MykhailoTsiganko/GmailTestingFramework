@@ -17,15 +17,15 @@ import org.apache.commons.csv.CSVRecord;
 import com.epam.lab.gmail.models.Order;
 import com.epam.lab.gmail.prop.anno.CSVElement;
 import com.epam.lab.gmail.prop.anno.CSVRootElement;
-import com.epam.lab.gmail.prop.exeptions.CSVParsingExeption;
+import com.epam.lab.gmail.prop.exeptions.CSVUnmurshalException;
 
 public class CSVUnmursheler {
 
     public static <T> List<T> unmurshalToList(File file, Class<T> clazz)
-	    throws CSVParsingExeption, IOException, InstantiationException, IllegalAccessException,
+	    throws CSVUnmurshalException, IOException, InstantiationException, IllegalAccessException,
 	    IllegalArgumentException, InvocationTargetException, NoSuchMethodException, SecurityException {
 	if (!clazz.isAnnotationPresent(CSVRootElement.class)) {
-	    throw new CSVParsingExeption();
+	    throw new CSVUnmurshalException();
 	}
 	List<T> list = new ArrayList<>();
 	Reader in = new FileReader(file);
@@ -38,10 +38,10 @@ public class CSVUnmursheler {
     }
     
     public static <T> List<T> unmurshal(File file, Class<T> clazz,CSVFormat format)
-	    throws CSVParsingExeption, IOException, InstantiationException, IllegalAccessException,
+	    throws CSVUnmurshalException, IOException, InstantiationException, IllegalAccessException,
 	    IllegalArgumentException, InvocationTargetException, NoSuchMethodException, SecurityException {
 	if (!clazz.isAnnotationPresent(CSVRootElement.class)) {
-	    throw new CSVParsingExeption();
+	    throw new CSVUnmurshalException();
 	}
 	List<T> list = new ArrayList<>();
 	Reader in = new FileReader(file);
@@ -130,7 +130,7 @@ public class CSVUnmursheler {
 
     public static void main(String[] args) throws InstantiationException, IllegalAccessException,
 	    IllegalArgumentException, InvocationTargetException, NoSuchMethodException, SecurityException,
-	    CSVParsingExeption, IOException, ParseException {
+	    CSVUnmurshalException, IOException, ParseException {
 	File file = new File("data/test2.csv");
 	List<Order> list = unmurshal(file, Order.class,CSVFormat.DEFAULT.withHeader("id","power","isHevy","name").withRecordSeparator(","));
 	list.forEach(System.out::println);
