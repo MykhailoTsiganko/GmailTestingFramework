@@ -3,8 +3,8 @@ package com.epam.lab.gmail.models;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
 
-import com.epam.lab.gmail.prop.anno.CSVElement;
-import com.epam.lab.gmail.prop.anno.CSVRootElement;
+import com.epam.lab.gmail.prop.csv.anno.CSVElement;
+import com.epam.lab.gmail.prop.csv.anno.CSVRootElement;
 
 @XmlRootElement(name = "user")
 @CSVRootElement

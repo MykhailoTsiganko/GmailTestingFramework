@@ -1,7 +1,7 @@
 package com.epam.lab.gmail.models;
 
-import com.epam.lab.gmail.prop.anno.CSVElement;
-import com.epam.lab.gmail.prop.anno.CSVRootElement;
+import com.epam.lab.gmail.prop.csv.anno.CSVElement;
+import com.epam.lab.gmail.prop.csv.anno.CSVRootElement;
 
 @CSVRootElement
 public class Order {

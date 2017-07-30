@@ -1,4 +1,4 @@
-package com.epam.lab.gmail.prop;
+package com.epam.lab.gmail.prop.csv;
 
 import java.io.File;
 import java.io.FileReader;
@@ -15,9 +15,9 @@ import org.apache.commons.csv.CSVFormat;
 import org.apache.commons.csv.CSVRecord;
 
 import com.epam.lab.gmail.models.Order;
-import com.epam.lab.gmail.prop.anno.CSVElement;
-import com.epam.lab.gmail.prop.anno.CSVRootElement;
-import com.epam.lab.gmail.prop.exeptions.CSVUnmurshalException;
+import com.epam.lab.gmail.prop.csv.anno.CSVElement;
+import com.epam.lab.gmail.prop.csv.anno.CSVRootElement;
+import com.epam.lab.gmail.prop.csv.exeptions.copy.CSVUnmurshalException;
 
 public class CSVUnmursheler {
 

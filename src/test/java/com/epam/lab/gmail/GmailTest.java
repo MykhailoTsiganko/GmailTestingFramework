@@ -16,7 +16,7 @@ import com.epam.lab.gmail.drivers.DriverManager;
 import com.epam.lab.gmail.models.Message;
 import com.epam.lab.gmail.models.User;
 import com.epam.lab.gmail.prop.PropertiesLoader;
-import com.epam.lab.gmail.providers.Provider;
+import com.epam.lab.gmail.providers.CustomDataProvider;
 
 public class GmailTest {
     public static final String PROPERTIES_FILE_URL = "resources/driver_config.properties";
@@ -30,7 +30,7 @@ public class GmailTest {
 	PropertiesLoader.load(PROPERTIES_FILE_URL);
     }
 
-    @Test(dataProviderClass = Provider.class, dataProvider = "getUsers")
+    @Test(dataProviderClass = CustomDataProvider.class, dataProvider = "getUsers")
     public void markMessagesToImportantAndDelete(User user) {
 
 	LoginBO loginBO = new LoginBO();

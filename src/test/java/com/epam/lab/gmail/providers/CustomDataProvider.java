@@ -7,13 +7,13 @@ import java.lang.reflect.InvocationTargetException;
 import org.testng.annotations.DataProvider;
 
 import com.epam.lab.gmail.models.User;
-import com.epam.lab.gmail.prop.CSVUnmursheler;
-import com.epam.lab.gmail.prop.exeptions.CSVParsingExeption;
+import com.epam.lab.gmail.prop.csv.CSVUnmursheler;
+import com.epam.lab.gmail.prop.csv.exeptions.copy.CSVUnmurshalException;
 
-public class Provider {
+public class CustomDataProvider {
     
-    @DataProvider(parallel = true)
-    public Object[] getUsers() throws InstantiationException, IllegalAccessException, IllegalArgumentException, InvocationTargetException, NoSuchMethodException, SecurityException, CSVParsingExeption, IOException {
+    @DataProvider(parallel = false)
+    public Object[] getUsers() throws InstantiationException, IllegalAccessException, IllegalArgumentException, InvocationTargetException, NoSuchMethodException, SecurityException, CSVUnmurshalException, IOException {
 	return CSVUnmursheler.unmurshalToList(new File("data/users.csv"), User.class).toArray();
     }
 
