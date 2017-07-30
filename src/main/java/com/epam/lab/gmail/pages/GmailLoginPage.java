@@ -8,7 +8,7 @@ import org.openqa.selenium.support.ui.ExpectedCondition;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
 import com.epam.lab.gmail.decorator.ElementDecorator;
-import com.epam.lab.gmail.drivers.DriverSingltone;
+import com.epam.lab.gmail.drivers.DriverManager;
 import com.epam.lab.gmail.elements.Button;
 import com.epam.lab.gmail.elements.InputText;
 
@@ -31,11 +31,11 @@ public class GmailLoginPage {
 
 	public GmailLoginPage() {
 		logger.info("GmailLoginPage constructor");
-		PageFactory.initElements(new ElementDecorator(DriverSingltone.getInstance()), this);
+		PageFactory.initElements(new ElementDecorator(DriverManager.getInstance()), this);
 	}
 
 	public GmailLoginPage open() {
-		DriverSingltone.getInstance().get(LOGIN_PAGE_URL);
+		DriverManager.getInstance().get(LOGIN_PAGE_URL);
 		waitForLoad();
 		return this;
 	}
@@ -54,7 +54,7 @@ public class GmailLoginPage {
 	}
 
 	private void waitForLoad() {
-		new WebDriverWait(DriverSingltone.getInstance(), 30)
+		new WebDriverWait(DriverManager.getInstance(), 30)
 				.until((ExpectedCondition<Boolean>) wd -> ((JavascriptExecutor) wd).executeScript("return document.readyState").equals("complete"));
 	}
 }

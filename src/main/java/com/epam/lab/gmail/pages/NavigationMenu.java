@@ -8,7 +8,7 @@ import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
 import com.epam.lab.gmail.decorator.ElementDecorator;
-import com.epam.lab.gmail.drivers.DriverSingltone;
+import com.epam.lab.gmail.drivers.DriverManager;
 import com.epam.lab.gmail.elements.Button;
 
 public class NavigationMenu {
@@ -25,7 +25,7 @@ public class NavigationMenu {
 
 	public NavigationMenu() {
 		logger.info("NavigationMenu constructor");
-		PageFactory.initElements(new ElementDecorator(DriverSingltone.getInstance()), this);
+		PageFactory.initElements(new ElementDecorator(DriverManager.getInstance()), this);
 	}
 
 	public void clikOnImportant() {
@@ -42,12 +42,12 @@ public class NavigationMenu {
 	private void waitUtilBoxLoaded() {
 		logger.info("waitUntilBoxLoaded method");
 		try {
-		new WebDriverWait(DriverSingltone.getInstance(), 3)
+		new WebDriverWait(DriverManager.getInstance(), 3)
 				.until(ExpectedConditions.presenceOfElementLocated(By.xpath(".//div[@class='vY']")));
 		} catch (Exception e) {
 		    e.printStackTrace();
 		}
-		new WebDriverWait(DriverSingltone.getInstance(), 10)
+		new WebDriverWait(DriverManager.getInstance(), 10)
 				.until(ExpectedConditions.presenceOfElementLocated(By.xpath(".//div[@class='vY nq']")));
 
 	}

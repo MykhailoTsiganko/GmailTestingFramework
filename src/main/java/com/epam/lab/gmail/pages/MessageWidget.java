@@ -11,7 +11,7 @@ import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
 import com.epam.lab.gmail.decorator.ElementDecorator;
-import com.epam.lab.gmail.drivers.DriverSingltone;
+import com.epam.lab.gmail.drivers.DriverManager;
 import com.epam.lab.gmail.elements.Label;
 
 public class MessageWidget {
@@ -50,14 +50,14 @@ public class MessageWidget {
 
 	public void clickOnImportantMarker() {
 		logger.info("clickOnImportantMarker method");
-		new Actions(DriverSingltone.getInstance()).click(importanceMarker).build().perform();
-		new WebDriverWait(DriverSingltone.getInstance(), 10).until(
+		new Actions(DriverManager.getInstance()).click(importanceMarker).build().perform();
+		new WebDriverWait(DriverManager.getInstance(), 10).until(
 				ExpectedConditions.presenceOfNestedElementLocatedBy(currentContext, By.xpath(IMPORTANT_MESSAGE_ELEM)));
 	}
 
 	public void clickOnMarker() {
 		logger.info("clickOnMarker method");
-		JavascriptExecutor js = (JavascriptExecutor) DriverSingltone.getInstance();
+		JavascriptExecutor js = (JavascriptExecutor) DriverManager.getInstance();
 		js.executeScript("arguments[0].click();", checkBox);
 	}
 

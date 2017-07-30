@@ -12,47 +12,47 @@ import org.testng.annotations.Test;
 
 import com.epam.lab.gmail.bisnes_layour.GmailBO;
 import com.epam.lab.gmail.bisnes_layour.LoginBO;
-import com.epam.lab.gmail.drivers.DriverSingltone;
+import com.epam.lab.gmail.drivers.DriverManager;
 import com.epam.lab.gmail.models.Message;
 import com.epam.lab.gmail.models.User;
-import com.epam.lab.gmail.prop.UsersDataHolder;
 import com.epam.lab.gmail.prop.PropertiesLoader;
+import com.epam.lab.gmail.providers.Provider;
 
 public class GmailTest {
-	public static final String PROPERTIES_FILE_URL = "resources/driver_config.properties";
-	public static User user;
+    public static final String PROPERTIES_FILE_URL = "resources/driver_config.properties";
+    public static User user;
 
-	public static Logger logger = Logger.getLogger(GmailTest.class);
+    public static Logger logger = Logger.getLogger(GmailTest.class);
 
-	@BeforeClass
-	public void setUp() throws Exception {
-		logger.info("setUp");
-		PropertiesLoader.load(PROPERTIES_FILE_URL);
-	}
+    @BeforeClass
+    public void setUp() throws Exception {
+	logger.info("setUp");
+	PropertiesLoader.load(PROPERTIES_FILE_URL);
+    }
 
-	@Test(threadPoolSize = 5, invocationCount = 2)
-	public void markMessagesToImportantAndDelete() {
+    @Test(dataProviderClass = Provider.class, dataProvider = "getUsers")
+    public void markMessagesToImportantAndDelete(User user) {
 
-		LoginBO loginBO = new LoginBO();
+	LoginBO loginBO = new LoginBO();
 
-		loginBO.loginAs(UsersDataHolder.getUser());
+	loginBO.loginAs(user);
 
-		GmailBO gmailBo = new GmailBO();
+	GmailBO gmailBo = new GmailBO();
 
-		List<Message> markedMessagesList = gmailBo.markMessagesAsImportant(3);
-		
-		assertNotNull(markedMessagesList);
+	List<Message> markedMessagesList = gmailBo.markMessagesAsImportant(3);
 
-		gmailBo.openImportantMesssagesList();
+	assertNotNull(markedMessagesList);
 
-		gmailBo.deleteMessages(markedMessagesList);
+	gmailBo.openImportantMesssagesList();
 
-		assertFalse(gmailBo.arePresent(markedMessagesList));
-	}
+	gmailBo.deleteMessages(markedMessagesList);
 
-	@AfterMethod
-	public void after() {
-		DriverSingltone.getInstance().quit();
-	}
+	assertFalse(gmailBo.arePresent(markedMessagesList));
+    }
+
+    @AfterMethod
+    public void after() {
+	DriverManager.closeDriver();
+    }
 
 }

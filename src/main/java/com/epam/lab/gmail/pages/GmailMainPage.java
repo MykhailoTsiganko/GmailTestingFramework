@@ -8,7 +8,7 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
 
-import com.epam.lab.gmail.drivers.DriverSingltone;
+import com.epam.lab.gmail.drivers.DriverManager;
 
 public class GmailMainPage {
 	private static Logger logger = Logger.getLogger(GmailMainPage.class);
@@ -21,7 +21,7 @@ public class GmailMainPage {
 	public GmailMainPage() {
 		logger.info("GmailMainPage");
 		
-		PageFactory.initElements(DriverSingltone.getInstance(), this);
+		PageFactory.initElements(DriverManager.getInstance(), this);
 		navigationMenu = new NavigationMenu();
 		topEditMenu = new EditMenu();
 	}

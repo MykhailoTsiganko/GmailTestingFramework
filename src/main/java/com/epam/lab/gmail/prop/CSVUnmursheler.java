@@ -21,7 +21,7 @@ import com.epam.lab.gmail.prop.exeptions.CSVParsingExeption;
 
 public class CSVUnmursheler {
 
-    public static <T> List<T> unmurshal(File file, Class<T> clazz)
+    public static <T> List<T> unmurshalToList(File file, Class<T> clazz)
 	    throws CSVParsingExeption, IOException, InstantiationException, IllegalAccessException,
 	    IllegalArgumentException, InvocationTargetException, NoSuchMethodException, SecurityException {
 	if (!clazz.isAnnotationPresent(CSVRootElement.class)) {

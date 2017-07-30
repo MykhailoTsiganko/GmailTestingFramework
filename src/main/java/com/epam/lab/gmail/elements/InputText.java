@@ -3,7 +3,7 @@ package com.epam.lab.gmail.elements;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.interactions.Actions;
 
-import com.epam.lab.gmail.drivers.DriverSingltone;
+import com.epam.lab.gmail.drivers.DriverManager;
 
 public class InputText extends Element {
 
@@ -20,7 +20,7 @@ public class InputText extends Element {
 	}
 	
 	public void sendKeysAction(String ...keys) {
-		Actions action = new Actions(DriverSingltone.getInstance());
+		Actions action = new Actions(DriverManager.getInstance());
 		action.sendKeys(this.element,keys).build().perform();
 	}
 

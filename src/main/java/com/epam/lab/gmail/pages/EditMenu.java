@@ -7,7 +7,7 @@ import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
 
 import com.epam.lab.gmail.decorator.ElementDecorator;
-import com.epam.lab.gmail.drivers.DriverSingltone;
+import com.epam.lab.gmail.drivers.DriverManager;
 import com.epam.lab.gmail.elements.Button;
 
 public class EditMenu {
@@ -18,7 +18,7 @@ public class EditMenu {
 
 	public EditMenu() {
 		logger.info("TopEditMenu constructor");
-		PageFactory.initElements(new ElementDecorator(DriverSingltone.getInstance()), this);
+		PageFactory.initElements(new ElementDecorator(DriverManager.getInstance()), this);
 	}
 
 	public void clickDelete() {
