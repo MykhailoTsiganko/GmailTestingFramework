@@ -3,7 +3,12 @@ package com.epam.lab.gmail.models;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
 
+import com.epam.lab.gmail.prop.anno.CSVElement;
+import com.epam.lab.gmail.prop.anno.CSVRootElement;
+
+
 @XmlRootElement(name = "user")
+@CSVRootElement
 public class User {
 	private String login;
 	private String password;
@@ -22,6 +27,7 @@ public class User {
 	}
 
 	@XmlElement(name = "login")
+	@CSVElement(name = "login")
 	public void setLogin(String login) {
 		this.login = login;
 	}
@@ -36,6 +42,7 @@ public class User {
 	}
 
 	@XmlElement(name = "password")
+	@CSVElement(name = "password")
 	public void setPassword(String password) {
 		this.password = password;
 	}
