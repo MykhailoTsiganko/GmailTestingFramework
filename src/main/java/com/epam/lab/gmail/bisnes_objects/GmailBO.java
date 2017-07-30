@@ -20,28 +20,28 @@ public class GmailBO {
 
 	public List<Message> getMessageModels() {
 		logger.info("getMessages method");
-		List<Message> mesageModelList = new ArrayList<>();
+		List<Message> messageList = new ArrayList<>();
 		for (MessageWidget messWidget : mainPage.getMessagesWidgets()) {
-			mesageModelList.add(getMessage(messWidget));
+			messageList.add(getMessage(messWidget));
 		}
-		return mesageModelList;
+		return messageList;
 	}
 
 	public List<Message> markMessagesAsImportant(int messagesToMurkNumber) {
 		logger.info("markMessagesAsImportant method");
-		List<Message> messageModelMarkedList = new ArrayList<>();
+		List<Message> markedMessagesList = new ArrayList<>();
 		int markedMessagesNumber = 0;
 		for (MessageWidget messageWidget : mainPage.getMessagesWidgets()) {
 			if (messageWidget.isNotImportant()) {
 				messageWidget.clickOnImportantMarker();
+				markedMessagesList.add(getMessage(messageWidget));
 				markedMessagesNumber++;
-				messageModelMarkedList.add(getMessage(messageWidget));
 			}
 			if (markedMessagesNumber >= messagesToMurkNumber) {
 				break;
 			}
 		}
-		return messageModelMarkedList;
+		return markedMessagesList;
 	}
 
 	public void openImportantMesssagesList() {

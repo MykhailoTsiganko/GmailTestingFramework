@@ -12,44 +12,44 @@ import com.epam.lab.gmail.drivers.DriverManager;
 import com.epam.lab.gmail.elements.Button;
 
 public class NavigationMenu {
-	private static Logger logger = Logger.getLogger(NavigationMenu.class);
+    private static Logger logger = Logger.getLogger(NavigationMenu.class);
 
-	@FindBy
-	private Button inboxItem;
+    @FindBy
+    private Button inboxItem;
 
-	@FindBy(css = "span.CJ")
-	private Button moreItem;
+    @FindBy(css = "span.CJ")
+    private Button moreItem;
 
-	@FindBy(css = "div.TN.GLujEb.aHS-bns")
-	private Button importantItem;
+    @FindBy(css = "div.TN.GLujEb.aHS-bns")
+    private Button importantItem;
 
-	public NavigationMenu() {
-		logger.info("NavigationMenu constructor");
-		PageFactory.initElements(new ElementDecorator(DriverManager.getInstance()), this);
+    public NavigationMenu() {
+	logger.info("NavigationMenu constructor");
+	PageFactory.initElements(new ElementDecorator(DriverManager.getInstance()), this);
+    }
+
+    public void clikOnImportant() {
+	logger.info("clikOnImportant method");
+	importantItem.click();
+	waitUtilBoxLoaded();
+    }
+
+    public void clikOnMore() {
+	logger.info("clikOnMore method");
+	moreItem.click();
+    }
+
+    private void waitUtilBoxLoaded() {
+	logger.info("waitUntilBoxLoaded method");
+	try {
+	    new WebDriverWait(DriverManager.getInstance(), 3)
+		    .until(ExpectedConditions.presenceOfElementLocated(By.xpath(".//div[@class='vY']")));
+	} catch (Exception e) {
+	    e.printStackTrace();
 	}
+	new WebDriverWait(DriverManager.getInstance(), 10)
+		.until(ExpectedConditions.presenceOfElementLocated(By.xpath(".//div[@class='vY nq']")));
 
-	public void clikOnImportant() {
-		logger.info("clikOnImportant method");
-		importantItem.click();
-		waitUtilBoxLoaded();
-	}
-
-	public void clikOnMore() {
-		logger.info("clikOnMore method");
-		moreItem.click();
-	}
-
-	private void waitUtilBoxLoaded() {
-		logger.info("waitUntilBoxLoaded method");
-		try {
-		new WebDriverWait(DriverManager.getInstance(), 3)
-				.until(ExpectedConditions.presenceOfElementLocated(By.xpath(".//div[@class='vY']")));
-		} catch (Exception e) {
-		    e.printStackTrace();
-		}
-		new WebDriverWait(DriverManager.getInstance(), 10)
-				.until(ExpectedConditions.presenceOfElementLocated(By.xpath(".//div[@class='vY nq']")));
-
-	}
+    }
 
 }

@@ -11,23 +11,23 @@ import com.epam.lab.gmail.drivers.DriverManager;
 import com.epam.lab.gmail.elements.Button;
 
 public class EditMenu {
-	private static Logger logger = Logger.getLogger(NavigationMenu.class);
+    private static Logger logger = Logger.getLogger(NavigationMenu.class);
 
-	@FindBy(xpath = "//div[@class='ar9 T-I-J3 J-J5-Ji']")
-	private List<Button> deleteButtons;
+    @FindBy(xpath = "//div[@class='ar9 T-I-J3 J-J5-Ji']")
+    private List<Button> deleteButtons;
 
-	public EditMenu() {
-		logger.info("TopEditMenu constructor");
-		PageFactory.initElements(new ElementDecorator(DriverManager.getInstance()), this);
+    public EditMenu() {
+	logger.info("TopEditMenu constructor");
+	PageFactory.initElements(new ElementDecorator(DriverManager.getInstance()), this);
+    }
+
+    public void clickDelete() {
+	logger.info("delete menthod");
+	for (Button deleteButton : deleteButtons) {
+	    if (deleteButton.isDisplayed()) {
+		deleteButton.click();
+	    }
 	}
-
-	public void clickDelete() {
-		logger.info("delete menthod");
-		for (Button deleteButton : deleteButtons) {
-			if (deleteButton.isDisplayed()) {
-				deleteButton.click();
-			}
-		}
-	}
+    }
 
 }
