@@ -12,25 +12,25 @@ import org.openqa.selenium.support.pagefactory.ElementLocator;
 import com.epam.lab.gmail.elements.Element;
 
 public class LocatingCustomElementListHandler implements InvocationHandler {
-    private final ElementLocator locator;
-    private final Class<Element> clazz;
+	private final ElementLocator locator;
+	private final Class<Element> clazz;
 
-    public LocatingCustomElementListHandler(ElementLocator locator, Class<Element> clazz) {
-	this.locator = locator;
-	this.clazz = clazz;
-    }
-
-    public Object invoke(Object object, Method method, Object[] objects) throws Throwable {
-	List<WebElement> elements = locator.findElements();
-	List<Element> customs = new ArrayList<Element>();
-
-	for (WebElement element : elements) {
-	    customs.add(WrapperFactory.createInstance(clazz, element));
+	public LocatingCustomElementListHandler(ElementLocator locator, Class<Element> clazz) {
+		this.locator = locator;
+		this.clazz = clazz;
 	}
-	try {
-	    return method.invoke(customs, objects);
-	} catch (InvocationTargetException e) {
-	    throw e.getCause();
+
+	public Object invoke(Object object, Method method, Object[] objects) throws Throwable {
+		List<WebElement> elements = locator.findElements();
+		List<Element> customs = new ArrayList<Element>();
+
+		for (WebElement element : elements) {
+			customs.add(WrapperFactory.createInstance(clazz, element));
+		}
+		try {
+			return method.invoke(customs, objects);
+		} catch (InvocationTargetException e) {
+			throw e.getCause();
+		}
 	}
-    }
 }

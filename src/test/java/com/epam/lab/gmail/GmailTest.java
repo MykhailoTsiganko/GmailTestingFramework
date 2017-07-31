@@ -19,40 +19,40 @@ import com.epam.lab.gmail.prop.DriverPropertisLoader;
 import com.epam.lab.gmail.providers.CustomDataProvider;
 
 public class GmailTest {
-    public static final String PROPERTIES_FILE_URL = "resources/driver_config.properties";
-    public static User user;
+	public static final String PROPERTIES_FILE_URL = "resources/driver_config.properties";
+	public static User user;
 
-    public static Logger logger = Logger.getLogger(GmailTest.class);
+	public static Logger logger = Logger.getLogger(GmailTest.class);
 
-    @BeforeClass
-    public void setUp() throws Exception {
-	logger.info("setUp");
-	DriverPropertisLoader.load(PROPERTIES_FILE_URL);
-    }
+	@BeforeClass
+	public void setUp() throws Exception {
+		logger.info("setUp");
+		DriverPropertisLoader.load(PROPERTIES_FILE_URL);
+	}
 
-    @Test(dataProviderClass = CustomDataProvider.class, dataProvider = "getUsers")
-    public void markMessagesToImportantAndDelete(User user) {
+	@Test(dataProviderClass = CustomDataProvider.class, dataProvider = "getUsers")
+	public void markMessagesToImportantAndDelete(User user) {
 
-	LoginBO loginBO = new LoginBO();
+		LoginBO loginBO = new LoginBO();
 
-	loginBO.loginAs(user);
+		loginBO.loginAs(user);
 
-	GmailBO gmailBo = new GmailBO();
+		GmailBO gmailBo = new GmailBO();
 
-	List<Message> markedMessagesList = gmailBo.markMessagesAsImportant(3);
+		List<Message> markedMessagesList = gmailBo.markMessagesAsImportant(3);
 
-	assertNotNull(markedMessagesList);
+		assertNotNull(markedMessagesList);
 
-	gmailBo.openImportantMesssagesList();
+		gmailBo.openImportantMesssagesList();
 
-	gmailBo.deleteMessages(markedMessagesList);
+		gmailBo.deleteMessages(markedMessagesList);
 
-	assertFalse(gmailBo.arePresent(markedMessagesList));
-    }
+		assertFalse(gmailBo.arePresent(markedMessagesList));
+	}
 
-    @AfterMethod
-    public void after() {
-	DriverManager.closeDriver();
-    }
+	@AfterMethod
+	public void after() {
+		DriverManager.closeDriver();
+	}
 
 }

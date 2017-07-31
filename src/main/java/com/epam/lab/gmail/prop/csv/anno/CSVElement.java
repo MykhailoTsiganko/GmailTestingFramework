@@ -6,7 +6,5 @@ import java.lang.annotation.Retention;
 
 @Retention(RUNTIME)
 public @interface CSVElement {
-    String name();
-
-
+	String name();
 }

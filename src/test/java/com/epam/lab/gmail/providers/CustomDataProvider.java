@@ -10,7 +10,7 @@ import com.epam.lab.gmail.prop.csv.exeptions.CSVUnmurshalException;
 
 public class CustomDataProvider {
 
-	@DataProvider(parallel = false)
+	@DataProvider(parallel = true)
 	public Object[] getUsers() throws CSVUnmurshalException {
 		return CSVUnmursheler.getObjects(new File("data/users.csv"), User.class).toArray();
 	}

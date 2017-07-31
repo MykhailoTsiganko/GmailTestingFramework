@@ -15,66 +15,66 @@ import com.epam.lab.gmail.drivers.DriverManager;
 import com.epam.lab.gmail.elements.Label;
 
 public class MessageWidget {
-    private static Logger logger = Logger.getLogger(NavigationMenu.class);
+	private static Logger logger = Logger.getLogger(NavigationMenu.class);
 
-    public static final String NOT_IMPORTANT_MESSAGE_CLASS = "pH-A7 a9q";
-    public static final String IMPORTANT_MESSAGE_ELEM = ".//*[@class='pH a9q']";
+	public static final String NOT_IMPORTANT_MESSAGE_CLASS = "pH-A7 a9q";
+	public static final String IMPORTANT_MESSAGE_ELEM = ".//*[@class='pH a9q']";
 
-    private WebElement currentContext;
+	private WebElement currentContext;
 
-    @FindBy(xpath = ".//*[@class='pG']/div[2]")
-    private WebElement importanceMarker;
+	@FindBy(xpath = ".//*[@class='pG']/div[2]")
+	private WebElement importanceMarker;
 
-    @FindBy(xpath = ".//td[@class='oZ-x3 xY']")
-    private WebElement checkBox;
+	@FindBy(xpath = ".//td[@class='oZ-x3 xY']")
+	private WebElement checkBox;
 
-    @FindBy(xpath = ".//div[@class='yW']/span")
-    private Label sender;
+	@FindBy(xpath = ".//div[@class='yW']/span")
+	private Label sender;
 
-    @FindBy(xpath = ".//span[@class='bog']")
-    private Label topic;
+	@FindBy(xpath = ".//span[@class='bog']")
+	private Label topic;
 
-    @FindBy(xpath = ".//td[@class='xW xY ']/span")
-    private Label date;
+	@FindBy(xpath = ".//td[@class='xW xY ']/span")
+	private Label date;
 
-    public MessageWidget(WebElement elem) {
-	logger.info("MessageWidget constructor");
-	PageFactory.initElements(new ElementDecorator(elem), this);
-	this.currentContext = elem;
-    }
+	public MessageWidget(WebElement elem) {
+		logger.info("MessageWidget constructor");
+		PageFactory.initElements(new ElementDecorator(elem), this);
+		this.currentContext = elem;
+	}
 
-    public boolean isNotImportant() {
-	logger.info("isNotImportant method");
-	return importanceMarker.getAttribute("class").equals(NOT_IMPORTANT_MESSAGE_CLASS);
-    }
+	public boolean isNotImportant() {
+		logger.info("isNotImportant method");
+		return importanceMarker.getAttribute("class").equals(NOT_IMPORTANT_MESSAGE_CLASS);
+	}
 
-    public void clickOnImportantMarker() {
-	logger.info("clickOnImportantMarker method");
-	new Actions(DriverManager.getInstance()).click(importanceMarker).build().perform();
-	new WebDriverWait(DriverManager.getInstance(), 10).until(ExpectedConditions
-		.presenceOfNestedElementLocatedBy(currentContext, By.xpath(IMPORTANT_MESSAGE_ELEM)));
-    }
+	public void clickOnImportantMarker() {
+		logger.info("clickOnImportantMarker method");
+		new Actions(DriverManager.getInstance()).click(importanceMarker).build().perform();
+		new WebDriverWait(DriverManager.getInstance(), 10).until(
+				ExpectedConditions.presenceOfNestedElementLocatedBy(currentContext, By.xpath(IMPORTANT_MESSAGE_ELEM)));
+	}
 
-    public void clickOnMarker() {
-	logger.info("clickOnMarker method");
-	JavascriptExecutor js = (JavascriptExecutor) DriverManager.getInstance();
-	js.executeScript("arguments[0].click();", checkBox);
-    }
+	public void clickOnMarker() {
+		logger.info("clickOnMarker method");
+		JavascriptExecutor js = (JavascriptExecutor) DriverManager.getInstance();
+		js.executeScript("arguments[0].click();", checkBox);
+	}
 
-    public String getDate() {
-	logger.info("getDate method");
+	public String getDate() {
+		logger.info("getDate method");
 
-	return date.getAttribute("aria-label");
-    }
+		return date.getAttribute("aria-label");
+	}
 
-    public String getSender() {
-	logger.info("getSender method");
-	return sender.getContex();
-    }
+	public String getSender() {
+		logger.info("getSender method");
+		return sender.getContex();
+	}
 
-    public String getTopic() {
-	logger.info("getTopic method");
-	return topic.getContex();
-    }
+	public String getTopic() {
+		logger.info("getTopic method");
+		return topic.getContex();
+	}
 
 }

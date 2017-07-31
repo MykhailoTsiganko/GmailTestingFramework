@@ -4,38 +4,38 @@ public class Message {
 	private String sender;
 	private String topic;
 	private String date;
-	
+
 	public String getSender() {
 		return sender;
 	}
-	
+
 	public void setSender(String sender) {
 		this.sender = sender;
 	}
-	
+
 	public String getTopic() {
 		return topic;
 	}
-	
+
 	public void setTopic(String topic) {
 		this.topic = topic;
 	}
-	
+
 	public String getDate() {
 		return date;
 	}
-	
+
 	public void setDate(String date) {
 		this.date = date;
 	}
-	
+
 	public Message(String sender, String topic, String date) {
 		super();
 		this.sender = sender;
 		this.topic = topic;
 		this.date = date;
 	}
-	
+
 	@Override
 	public int hashCode() {
 		final int prime = 31;
@@ -45,7 +45,7 @@ public class Message {
 		result = prime * result + ((topic == null) ? 0 : topic.hashCode());
 		return result;
 	}
-	
+
 	@Override
 	public boolean equals(Object obj) {
 		if (this == obj)
@@ -72,12 +72,10 @@ public class Message {
 			return false;
 		return true;
 	}
-	
+
 	@Override
 	public String toString() {
 		return "Message [sender=" + sender + ", topic=" + topic + ", date=" + date + "]";
 	}
-	
-	
 
 }
