@@ -16,7 +16,7 @@ import org.apache.log4j.Logger;
 
 import com.epam.lab.gmail.prop.csv.anno.CSVElement;
 import com.epam.lab.gmail.prop.csv.anno.CSVRootElement;
-import com.epam.lab.gmail.prop.csv.exeptions.copy.CSVUnmurshalException;
+import com.epam.lab.gmail.prop.csv.exeptions.CSVUnmurshalException;
 
 public class CSVUnmursheler {
     private static Logger logger = Logger.getLogger(CSVUnmursheler.class);
