@@ -18,8 +18,8 @@ import com.epam.lab.gmail.prop.csv.anno.CSVElement;
 import com.epam.lab.gmail.prop.csv.anno.CSVRootElement;
 import com.epam.lab.gmail.prop.csv.exeptions.CSVUnmurshalException;
 
-public class CSVUnmursheler {
-	private static Logger logger = Logger.getLogger(CSVUnmursheler.class);
+public class CSVUnmarshaller {
+	private static Logger logger = Logger.getLogger(CSVUnmarshaller.class);
 
 	public static <T> List<T> getObjects(File file, Class<T> clazz) throws CSVUnmurshalException {
 		logger.info("getObjects");
